@@ -39,32 +39,34 @@ public class Cliente extends Thread{
 		}
 	}
 	
-	public void thrMess(Mensaje mess)
+	public void thrMess()
 	{
-		//O lo mete o se espera
-		while(buff.getFull())
-		{
-			yield();
+		for(int i=0; i<messs.size();i++) {
+			messs.get(i).sendMess(buff);
 		}
-		buff.keepMess(mess);
-
-		synchronized(mess) {
-		//esto es para cuando entre el mensaje en el buffer (diseño- párrafo3 )
-		try {
-			mess.wait();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		}
+//		//O lo mete o se espera
+//		while(buff.getFull())
+//		{
+//			yield();
+//		}
+//		buff.keepMess(mess);
+//
+//		synchronized(mess) {
+//		//esto es para cuando entre el mensaje en el buffer (diseño- párrafo3 )
+//		try {
+//			mess.wait();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+		
 	}
 	
 	@Override
 	public void run()
 	{
-		for(Mensaje kidA: messs)
-		{
-			thrMess(kidA);//kidA es el mensaje que el cliente está intentando introducir eso y también un albúm de radiohead 
-		}
+
+			thrMess();//kidA es el mensaje que el cliente está intentando introducir eso y también un albúm de radiohead 
+		
 		buff.killMe(); //el cliente debe avisar al buffer que chao
 	}
 	//-------------------------------------------SetterGetterBegin

@@ -10,7 +10,7 @@ public class Servidor extends Thread{
 	public Servidor(Buffer buff)
 	{
 		Servidor.buff = buff;
-		mess = new Mensaje(-1);
+		mess = new Mensaje(-2);
 
 	}
 

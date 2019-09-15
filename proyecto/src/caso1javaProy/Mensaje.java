@@ -1,6 +1,6 @@
 package caso1javaProy;
 
-public class Mensaje {
+public class Mensaje extends Thread{
 
 	//-------------------------------------------AB
 	/**
@@ -15,12 +15,19 @@ public class Mensaje {
 	{
 		valOriginal=val;
 	}
-//	
-//	public void depMess()
-//	{
-//		
-//	}
-//	
+	
+	public void  sendMess(Buffer buff) {
+		while(!buff.getFull()) {
+			buff.keepMess(this);
+			System.out.println("mensaje entro al buff");
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+				System.out.println("sendMess messit up");
+			}
+		}
+		buff.keepMess(this);
+	}
 
 	//-------------------------------------------SGB
 	public int getValOriginal() {

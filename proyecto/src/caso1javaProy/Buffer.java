@@ -42,6 +42,14 @@ public class Buffer {
 	 */
 	public synchronized void keepMess(Mensaje mess)
 	{
+		while(this.getFull()) {
+			try {
+				mess.wait();
+				System.out.println("mensaje se durmio en el buff");
+			} catch (InterruptedException e) {
+				System.out.println("keepMess mess it up");
+			}
+		}
 		messs.add(mess);
 		vaca --;
 		updatefull();
